@@ -5,12 +5,11 @@ from main import *
 
 boston = pd.read_csv('https://raw.githubusercontent.com/JWarmenhoven/ISLR-python/master/Notebooks/Data/Boston.csv')
 
-X = boston[['medv']]
+X = boston[['lstat']]
 y = boston[['crim']]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-lr = LinearRegression(X_train, y_train)
-lr.fit(10, learning_rate=0.01)
-
+lr = LinearRegression(X_train, y_train, epoch=100, learning_rate=0.01)
+lr.fit()
 

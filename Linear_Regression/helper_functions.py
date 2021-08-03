@@ -77,7 +77,7 @@ def make_predictions(X, w, b):
 
 def loss_function(y_hat, y):
    """
-   Calculating the sum-of-squares error
+   Calculating the mean squared error
 
    Input
    -------
@@ -89,13 +89,12 @@ def loss_function(y_hat, y):
    Yields 
    -------
    RSE: float 
-      The sum-of-squares error that measures the lack of fit of the model 
+      The mean squared error that measures the lack of fit of the model 
    """
-   n = y.shape[0]
    y = y.values
    y_hat = y_hat.values
-   RSE = np.sqrt((1/(n-2))*np.sum((y - y_hat)**2))
-   return round(RSE, 5)
+   MSE = ((y - y_hat)**2).mean()
+   return round(MSE, 5)
 
 def update_weights(X, y, y_hat, w, b, learning_rate):
    """
@@ -127,7 +126,7 @@ def update_weights(X, y, y_hat, w, b, learning_rate):
    y = y.values
    y_hat = y_hat.values
    # Define the number of samples m
-   m = X.shape[1]
+   m = y.shape[0]
    # Calculate the derivative of w 
    dw = (2/m)*X.T@(y_hat - y)
    # Calculate the derivative of b 

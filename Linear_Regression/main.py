@@ -5,12 +5,14 @@ class LinearRegression():
     """
     Ordinary Linear Regression model
     """
-    def __init__(self, X_train, y_train):
+    def __init__(self, X_train, y_train, epoch, learning_rate):
         self.X_train = X_train 
         self.y_train = y_train
+        self.w, self.b = initialize_params(self.X_train)
+        self.epoch = epoch
+        self.learning_rate = learning_rate
 
-
-    def fit(self, epoch, learning_rate):
+    def fit(self):
         """
         Fit Linear model to the data. 
 
@@ -27,28 +29,27 @@ class LinearRegression():
         """
         # Splitting dataset into training and validation set 
         xtrain, xval, ytrain, yval = train_test_split(self.X_train, self.y_train)
+        
         # Implementing the Gradient Descent 
-        # Initialize the parameters 
-        w, b = initialize_params(xtrain)
 
         # Calculating y_hat and updating the weights  
-        for i in range(epoch):
+        for i in range(self.epoch):
 
             # Train the model using the training data 
-            y_hat = make_predictions(xtrain, w, b)
+            y_hat = make_predictions(xtrain, self.w, self.b)
             train_loss = loss_function(y_hat, ytrain)
-            w, b = update_weights(xtrain, ytrain, y_hat, w, b, learning_rate)
+            self.w, self.b = update_weights(xtrain, ytrain, y_hat, self.w, self.b, self.learning_rate)
 
             # Print out the loss of training and validation set every 10 epochs 
-            if i%10:
+            if i%10 == 0:
                 # Validate the model predictions using the validation data every 10 epochs 
-                y_hat_val = make_predictions(xval, w, b)
+                y_hat_val = make_predictions(xval, self.w, self.b)
                 val_loss = loss_function(y_hat_val, yval)
                 print(f'Epoch {i} ------- train_loss: {train_loss} --------- val_loss: {val_loss}')
 
         return self
         
-    def predict(self, X):
+    def predict(self, X, w, b):
         """
         Predict the label using the pre-trained weights.
 
@@ -62,6 +63,6 @@ class LinearRegression():
         y_pred: array-like of shape (n_samples, 1)
             Predicted labels using the Linear Model.
         """
-        y_pred = make_predictions(X, self.w, self.b)
+        y_pred = make_predictions(X)
         return y_pred
 
