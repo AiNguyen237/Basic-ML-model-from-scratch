@@ -51,7 +51,7 @@ def initialize_params(X):
        
     """
     w = np.random.rand(X.shape[1], 1)
-    b = np.array([0])
+    b = np.array(0)
     return w, b
 
 def make_predictions(X, w, b):
@@ -123,12 +123,12 @@ def update_weights(X, y, y_hat, w, b, learning_rate):
        Newly updated coefficients for the interception
 
    """
-   y = y.values
-   y_hat = y_hat.values
-   # Define the number of samples m
    m = y.shape[0]
+   y_hat = y_hat.values
+   y = y.values
+   # Define the number of samples m
    # Calculate the derivative of w 
-   dw = (2/m)*X.T@(y_hat - y)
+   dw = (2/m)*(X.T@(y_hat - y))
    # Calculate the derivative of b 
    db = (2/m)*np.sum(y_hat - y)
    # Update the parameters

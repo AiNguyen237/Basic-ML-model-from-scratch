@@ -3,13 +3,15 @@ import pandas as pd
 from helper_functions import *
 from main import *
 
-boston = pd.read_csv('https://raw.githubusercontent.com/JWarmenhoven/ISLR-python/master/Notebooks/Data/Boston.csv')
+auto = pd.read_csv('https://raw.githubusercontent.com/JWarmenhoven/ISLR-python/master/Notebooks/Data/Auto.csv')
+# print(auto.info())
 
-X = boston[['lstat']]
-y = boston[['crim']]
-
+X = auto[['displacement']]
+y = auto[['mpg']]
+# print(X.head())
+# print(y.head())
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-lr = LinearRegression(X_train, y_train, epoch=100, learning_rate=0.01)
+lr = LinearRegression(X_train, y_train, epoch=100, learning_rate=5e-8)
 lr.fit()
 

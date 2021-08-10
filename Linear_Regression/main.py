@@ -34,7 +34,7 @@ class LinearRegression():
 
         # Calculating y_hat and updating the weights  
         for i in range(self.epoch):
-
+            
             # Train the model using the training data 
             y_hat = make_predictions(xtrain, self.w, self.b)
             train_loss = loss_function(y_hat, ytrain)
@@ -49,7 +49,7 @@ class LinearRegression():
 
         return self
         
-    def predict(self, X, w, b):
+    def predict(self, xtest):
         """
         Predict the label using the pre-trained weights.
 
@@ -63,6 +63,6 @@ class LinearRegression():
         y_pred: array-like of shape (n_samples, 1)
             Predicted labels using the Linear Model.
         """
-        y_pred = make_predictions(X)
+        y_pred = make_predictions(xtest, self.w, self.b)
         return y_pred
 
