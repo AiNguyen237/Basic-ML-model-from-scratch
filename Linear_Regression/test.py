@@ -10,8 +10,10 @@ X = auto[['displacement']]
 y = auto[['mpg']]
 # print(X.head())
 # print(y.head())
+
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-lr = LinearRegression(X_train, y_train, epoch=100, learning_rate=5e-8)
+
+lr = LinearRegression(X_train, y_train, epoch=100, learning_rate=5e-12)
 lr.fit()
 

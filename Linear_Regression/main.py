@@ -38,6 +38,7 @@ class LinearRegression():
             # Train the model using the training data 
             y_hat = make_predictions(xtrain, self.w, self.b)
             train_loss = loss_function(y_hat, ytrain)
+            R2_acc_train = R2_statistics(ytrain, y_hat)
             self.w, self.b = update_weights(xtrain, ytrain, y_hat, self.w, self.b, self.learning_rate)
 
             # Print out the loss of training and validation set every 10 epochs 
@@ -45,7 +46,8 @@ class LinearRegression():
                 # Validate the model predictions using the validation data every 10 epochs 
                 y_hat_val = make_predictions(xval, self.w, self.b)
                 val_loss = loss_function(y_hat_val, yval)
-                print(f'Epoch {i} ------- train_loss: {train_loss} --------- val_loss: {val_loss}')
+                R2_acc_val = R2_statistics(yval, y_hat_val)
+                print(f'Epoch {i} ------- train_loss: {train_loss} --------- train_acc: {R2_acc_train} --------- val_loss: {val_loss} --------- val_acc: {R2_acc_val}')
 
         return self
         

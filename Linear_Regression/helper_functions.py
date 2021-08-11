@@ -137,3 +137,23 @@ def update_weights(X, y, y_hat, w, b, learning_rate):
 
    return w,b
 
+def R2_statistics(y, y_hat):
+   """
+   Calculate the R-statistics. 
+
+   Input 
+   -------
+   y_hat:  array-like of shape (n_samples, 1)
+      Predictions calculated from the make_predictions function 
+   y: array-like of shape (n_samples, 1)
+      Target variables 
+
+   Yields 
+   -------
+   R_2: float 
+      The R2-statistic. If the R2 statictis is close to 1 indicates that a large proportion of the variability in the response is explained by the regression.
+   """
+   y = y.values 
+   y_hat = y_hat.values
+   R2 = 1 - (np.sum((y-y_hat)**2)/np.sum((y-np.mean(y))**2))
+   return R2
