@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd 
 
-def train_test_split(X, y, test_frac = 0.8, random_state = 50):
+def train_test_split(X, y, test_frac = 0.2):
    """
    Splitting the dataset into training and testing set.
 
@@ -27,10 +27,15 @@ def train_test_split(X, y, test_frac = 0.8, random_state = 50):
    y_test: array-like of shape (n_samples, 1)
       Testing data labels
    """
-   X_train = X.sample(frac=test_frac, random_state=random_state)
-   X_test = X.drop(X_train.index)
-   y_train = y.sample(frac=test_frac, random_state=random_state)
-   y_test = y.drop(y_train.index)
+   shuffle_idx = np.random.permutation(X.shape[0])
+   X = X[shuffle_idx]
+   y = y[shuffle_idx]
+
+   n = int(test_frac*X.shape[0])
+   X_train = X[:X.shape[0]-n]
+   y_train = y[:X.shape[0]-n]
+   X_test = X[X.shape[0]-n:n]
+   y_test = y[X.shape[0]-n:n]
    return X_train, X_test, y_train, y_test
 
 def initialize_params(X):
@@ -91,8 +96,6 @@ def loss_function(y_hat, y):
    RSE: float 
       The mean squared error that measures the lack of fit of the model 
    """
-   y = y.values
-   y_hat = y_hat.values
    MSE = ((y - y_hat)**2).mean()
    return round(MSE, 5)
 
@@ -124,8 +127,6 @@ def update_weights(X, y, y_hat, w, b, learning_rate):
 
    """
    m = y.shape[0]
-   y_hat = y_hat.values
-   y = y.values
    # Define the number of samples m
    # Calculate the derivative of w 
    dw = (2/m)*(X.T@(y_hat - y))
@@ -153,7 +154,5 @@ def R2_statistics(y, y_hat):
    R_2: float 
       The R2-statistic. If the R2 statictis is close to 1 indicates that a large proportion of the variability in the response is explained by the regression.
    """
-   y = y.values 
-   y_hat = y_hat.values
    R2 = 1 - (np.sum((y-y_hat)**2)/np.sum((y-np.mean(y))**2))
    return R2

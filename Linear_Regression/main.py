@@ -1,7 +1,7 @@
 import numpy as np 
 from helper_functions import *
 
-class LinearRegression():
+class LinearRegression_scratch():
     """
     Ordinary Linear Regression model
     """
